@@ -64,6 +64,8 @@ create table if not exists public.purchases (
   invoice_number text,
   invoice_url text,
   refunded_at timestamptz,
+  -- מתי נשלח ללקוח מסמך פרטי העסקה באימייל
+  order_email_sent_at timestamptz,
   created_at timestamptz not null default now()
 );
 

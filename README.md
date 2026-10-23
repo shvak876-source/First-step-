@@ -34,7 +34,10 @@
 | `INVOICE_PROVIDER` | | `none` (ברירת מחדל) או `greeninvoice` |
 | `GREENINVOICE_API_KEY_ID` / `GREENINVOICE_API_KEY_SECRET` | אם greeninvoice | Morning → הגדרות → כלי מפתחים → מפתחות API |
 | `GREENINVOICE_API_URL` | | sandbox: `https://sandbox.d.greeninvoice.co.il/api/v1`, ייצור: `https://api.greeninvoice.co.il/api/v1` |
-| `GREENINVOICE_DOCUMENT_TYPE` | | `320` חשבונית מס/קבלה (עוסק מורשה/חברה), `400` קבלה (עוסק פטור) |
+| `GREENINVOICE_DOCUMENT_TYPE` | | `400` קבלה (עוסק פטור – ברירת מחדל), `320` חשבונית מס/קבלה (עוסק מורשה/חברה) |
+| `RESEND_API_KEY` | ✓ לייצור | [resend.com](https://resend.com) → API Keys – לשליחת מסמך פרטי העסקה ללקוח |
+| `EMAIL_FROM` | ✓ לייצור | למשל `הצעד הראשון <orders@your-domain.co.il>` (הדומיין חייב להיות מאומת ב-Resend) |
+| `EMAIL_REPLY_TO` | | לאן יגיעו תשובות של לקוחות |
 
 ראו גם `.env.example`.
 
@@ -96,6 +99,15 @@ npm run dev
 - **ידני**: להשאיר `none` ולהפיק קבלה ידנית לכל רכישה (לא מומלץ). אם הפקה אוטומטית נכשלת – זה מופיע בלוגים
   (`invoice creation failed – issue manually!`).
 
+### אימייל פרטי עסקה ללקוח
+אחרי כל תשלום, ה-webhook שולח ללקוח אימייל עם **מסמך פרטי העסקה**: פרטי העוסק, מספר הזמנה, סכום, תקופת
+גישה ותנאי ביטול. החוק מחייב למסור מסמך כזה בעסקת מכר מרחוק, ולא מספיק שהוא מופיע באתר. התבנית נמצאת ב-`lib/order-email.ts`.
+1. פותחים חשבון ב-[Resend](https://resend.com) (יש מסלול חינמי).
+2. **Domains → Add Domain** → מוסיפים את רשומות ה-DNS שהם נותנים אצל ספק הדומיין.
+3. **API Keys → Create** → מעתיקים ל-`RESEND_API_KEY`, ומגדירים `EMAIL_FROM`.
+4. אם השליחה נכשלת, זה נרשם בלוג (`order email failed – send manually!`) והעמודה `order_email_sent_at` נשארת ריקה.
+   כך אפשר לראות ב-Supabase למי צריך לשלוח ידנית.
+
 ## 4. העלאת סרטונים
 
 1. מכינים את הקבצים: **MP4 (H.264 + AAC)**, מומלץ 720p–1080p, ‎faststart (`ffmpeg -i in.mov -c:v libx264 -crf 23 -preset slow -c:a aac -movflags +faststart 01.mp4`).
@@ -131,7 +143,7 @@ npm run dev
 - [ ] פרטי העסק: שם, סוג עוסק, מספר עוסק/ח.פ, כתובת, טלפון, אימייל, שעות מענה
 - [ ] רכז/ת נגישות: שם, טלפון, אימייל, תאריך עדכון ההצהרה
 - [ ] `launchEndsAt` – תאריך סיום אמיתי למחיר ההשקה
-- [ ] `vatNote` – עוסק פטור? (אז "העסק פטור ממע"מ" במקום "כולל מע"מ")
+- [ ] `business.type` / `vatNote` – מוגדרים כרגע ל**עוסק פטור**. אם תעבור לעוסק מורשה, לעדכן אותם ואת `GREENINVOICE_DOCUMENT_TYPE=320`
 - [ ] `access` – תקופת הגישה (כרגע 12 חודשים) – להחליט
 - [ ] שמות, תיאורים ומשכים של 10 השיעורים; רשימת "מה מקבלים"; FAQ
 - [ ] המלצות – רק אמיתיות, עם אישור בכתב מהכותבים
@@ -149,6 +161,7 @@ npm run dev
 - [ ] תבניות אימייל בעברית + SMTP משלכם
 - [ ] Stripe: אימות עסק, webhook, בדיקה מלאה במצב test, מעבר ל-Live
 - [ ] חשבוניות: Morning sandbox → ייצור (או ספק אחר)
+- [ ] Resend: אימות דומיין + `RESEND_API_KEY` + `EMAIL_FROM` – ולבדוק שהאימייל עם פרטי העסקה מגיע אחרי רכישת בדיקה
 - [ ] להעלות סרטונים **וכתוביות** לכל 10 השיעורים
 - [ ] לוגו / favicon / תמונת OG (אם מוסיפים תמונות – לתת להן `alt`)
 - [ ] אם מוסיפים Google Analytics / Meta Pixel – לטעון רק אחרי `hasConsent(...)` מ-`lib/consent.ts`

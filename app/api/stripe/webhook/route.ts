@@ -3,6 +3,8 @@ import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { createServiceClient } from "@/lib/supabase/server";
 import { createInvoice } from "@/lib/invoice";
+import { sendEmail } from "@/lib/email";
+import { orderEmail } from "@/lib/order-email";
 import { requireEnv } from "@/lib/env";
 import { site } from "@/config/site";
 
@@ -104,6 +106,28 @@ async function handlePaidSession(session: Stripe.Checkout.Session) {
 
   if (Object.keys(updates).length) {
     await db.from("purchases").update(updates).eq("id", inserted.id);
+  }
+
+  // מסמך פרטי העסקה ללקוח באימייל (סעיף 14ג(ב) לחוק הגנת הצרכן)
+  const customerEmail = session.customer_details?.email ?? session.customer_email;
+  if (customerEmail) {
+    try {
+      const mail = orderEmail({
+        purchaseId: inserted.id,
+        createdAt: new Date(session.created * 1000),
+        amountIls: (session.amount_total ?? 0) / 100,
+        customerEmail,
+        customerName: session.customer_details?.name ?? "",
+        termsVersion: session.metadata?.terms_version ?? "unknown",
+        invoiceUrl: updates.invoice_url,
+        receiptUrl: updates.receipt_url,
+      });
+      if (await sendEmail({ to: customerEmail, ...mail })) {
+        await db.from("purchases").update({ order_email_sent_at: new Date().toISOString() }).eq("id", inserted.id);
+      }
+    } catch (e) {
+      console.error("[webhook] order email failed – send manually!", session.id, e);
+    }
   }
 }
 

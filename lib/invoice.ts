@@ -59,7 +59,7 @@ async function createGreenInvoice(input: InvoiceInput): Promise<InvoiceResult> {
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
     body: JSON.stringify({
       // 320 = חשבונית מס/קבלה, 400 = קבלה (לעוסק פטור)
-      type: Number(process.env.GREENINVOICE_DOCUMENT_TYPE || 320),
+      type: Number(process.env.GREENINVOICE_DOCUMENT_TYPE || 400),
       description: input.description,
       lang: "he",
       currency: "ILS",

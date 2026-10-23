@@ -68,6 +68,7 @@ export default function PrivacyPage() {
           <strong>שירות הפקת חשבוניות</strong> – <span className="todo">TODO: שם הספק (למשל Morning / חשבונית ירוקה)</span>: הפקת
           קבלה/חשבונית ושליחתה אליך.
         </li>
+        <li><strong>Resend</strong> – שליחת אימיילים (פרטי העסקה לאחר רכישה).</li>
         <li>רשויות מוסמכות – כאשר הדין מחייב זאת.</li>
       </ul>
       <p>
