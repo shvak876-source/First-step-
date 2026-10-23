@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Heebo, Secular_One } from "next/font/google";
+import { Heebo } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -10,7 +10,6 @@ import { site } from "@/config/site";
 import { siteUrl } from "@/lib/env";
 
 const heebo = Heebo({ subsets: ["hebrew", "latin"], variable: "--font-heebo", display: "swap" });
-const secular = Secular_One({ subsets: ["hebrew", "latin"], weight: "400", variable: "--font-secular", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
@@ -23,7 +22,7 @@ export const viewport: Viewport = { themeColor: "#050505", width: "device-width"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="he" dir="rtl" className={`${heebo.variable} ${secular.variable}`} suppressHydrationWarning>
+    <html lang="he" dir="rtl" className={`${heebo.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: a11yBootScript }} />
       </head>

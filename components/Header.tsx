@@ -14,8 +14,8 @@ export default async function Header() {
       <div className="container">
         <Link href="/" className="logo" aria-label={`${site.name} – לדף הבית`}>
           <span className="logo-mark" aria-hidden="true">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round">
-              <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" />
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="square">
+              <path d="M15 5l-7 7 7 7" />
             </svg>
           </span>
           {site.name}
