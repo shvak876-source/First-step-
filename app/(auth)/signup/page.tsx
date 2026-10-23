@@ -8,7 +8,7 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
   const sp = await searchParams;
   return (
     <div className="auth-wrap">
-      <p className="eyebrow">פתיחת תיק</p>
+      <p className="eyebrow">בוא נתחיל</p>
       <h1 style={{ fontSize: "2.2rem" }}>הרשמה</h1>
       <SignupForm next={safeNext(sp.next, "/checkout")} />
     </div>

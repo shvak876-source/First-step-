@@ -35,7 +35,7 @@ export default async function LessonPage({ params }: Params) {
   return (
     <div className="course-layout">
       <section aria-labelledby="lesson-title">
-        <p className="eyebrow">שיעור {String(lesson.number).padStart(2, "0")} מתוך {lessons.length}</p>
+        <p className="eyebrow">שיעור {lesson.number} מתוך {lessons.length}</p>
         <h1 id="lesson-title" style={{ fontSize: "clamp(1.7rem, 6vw, 2.6rem)" }}>{lesson.title}</h1>
         <LessonPlayer
           slug={lesson.slug}
@@ -73,7 +73,7 @@ export default async function LessonPage({ params }: Params) {
           {lessons.map((l) => (
             <li key={l.slug}>
               <Link href={`/course/${l.slug}`} aria-current={l.slug === slug ? "page" : undefined}>
-                <span className="n" aria-hidden="true">{String(l.number).padStart(2, "0")}</span>
+                <span className="n" aria-hidden="true">{l.number}</span>
                 <span>
                   <span className="sr-only">שיעור {l.number}: </span>
                   {l.title}

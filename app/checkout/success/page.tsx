@@ -13,8 +13,8 @@ export default async function SuccessPage() {
     <div className="auth-wrap" style={{ textAlign: "center" }}>
       {ready ? (
         <>
-          <p className="stamp" style={{ borderColor: "var(--teal)", color: "var(--teal)" }}>הגישה אושרה</p>
-          <h1 style={{ fontSize: "2.2rem" }}>ברוך הבא לתיק</h1>
+          <p className="pill">הגישה אושרה</p>
+          <h1 style={{ fontSize: "2.2rem" }}>ברוך הבא לקורס</h1>
           <p className="muted">התשלום התקבל והגישה לקורס פתוחה. הקבלה זמינה באזור האישי.</p>
           <Link href="/course" className="btn btn-primary btn-block">לשיעור הראשון</Link>
         </>

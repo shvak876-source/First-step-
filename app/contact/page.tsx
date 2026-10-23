@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: "יצירת קשר" };
 export default function ContactPage() {
   return (
     <article className="prose">
-      <p className="eyebrow">ערוץ פתוח</p>
+      <p className="eyebrow">דברו איתנו</p>
       <h1>יצירת קשר</h1>
       <p>יש שאלה על הקורס, תקלה בגישה או בקשת ביטול? אפשר לפנות אלינו בכל אחת מהדרכים הבאות.</p>
       <div className="card">

@@ -9,8 +9,8 @@ export default async function CourseLayout({ children }: { children: React.React
   if (!(await hasCourseAccess())) {
     return (
       <div className="auth-wrap" style={{ textAlign: "center" }}>
-        <p className="stamp">גישה מוגבלת</p>
-        <h1 style={{ fontSize: "2rem" }}>התיק נעול</h1>
+        <p className="pill">למשתתפי הקורס</p>
+        <h1 style={{ fontSize: "2rem" }}>אזור הקורס עדיין לא פתוח לך</h1>
         <p className="muted">
           אזור הקורס פתוח למי שרכש את הקורס. אם כבר שילמת והגישה עדיין לא נפתחה – בדוק/י את האזור
           האישי או פנה/י אלינו.

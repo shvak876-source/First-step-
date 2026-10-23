@@ -25,7 +25,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
 
   return (
     <div className="container" style={{ maxWidth: 860, padding: "40px 16px 80px" }}>
-      <p className="eyebrow">התיק שלך</p>
+      <p className="eyebrow">החשבון שלך</p>
       <h1 style={{ fontSize: "2.4rem" }}>אזור אישי</h1>
       {sp.updated === "password" && <FormAlert message="הסיסמה עודכנה." />}
 
